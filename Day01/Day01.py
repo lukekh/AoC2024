@@ -1,26 +1,27 @@
-"""AoC :: Day XX"""
-from dataclasses import dataclass
-import math
-import re
+"""AoC :: Day 1"""
 import time
-from typing import Literal, Optional, TextIO
-DAY = XX
+from typing import TextIO
+DAY = 1
 INPUT_FILE = 'Day{day}/Day{day}.in'.format(day=str(DAY).zfill(2))
 
 
 def parse(file: TextIO):
     """Parse the plaintext input"""
-    return [i[:-1] for i in file.readlines()]
+    return tuple(zip(*[(int(x), int(y)) for x, y in [i[:-1].split("   ") for i in file.readlines()]]))
 
 
-def part_one(inputs: list[str]):
+
+def part_one(inputs: tuple[list[int], list[int]]):
     """Solution to part one"""
-    return 1
+    x_list, y_list = inputs
+    return sum(abs(x - y) for x, y in zip(sorted(x_list), sorted(y_list)))
 
 
-def part_two(inputs: list[str]):
+def part_two(inputs: tuple[list[int], list[int]]):
     """Solution to part two"""
-    return 2
+    x_list, y_list = inputs
+    y_ref = {y: y_list.count(y) for y in set(y_list)}
+    return sum(x * y_ref.get(x, 0) for x in x_list)
 
 
 # run both solutions and print outputs + runtime
