@@ -1,9 +1,7 @@
 """AoC :: Day 3"""
-from dataclasses import dataclass
-import math
 import re
 import time
-from typing import Literal, Optional, TextIO
+from typing import TextIO
 DAY = 3
 INPUT_FILE = 'Day{day}/Day{day}.in'.format(day=str(DAY).zfill(2))
 
