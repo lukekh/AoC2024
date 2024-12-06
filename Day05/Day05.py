@@ -43,13 +43,14 @@ def part_one(rules: dict[int, set], updates: list[list[int]]):
     
     Return the invalid updates since they're relevant to part two
     """
-    s, invalid_updates = 0, []
+    a1, a2 = 0, 0
     for update in updates:
+        k = len(update)//2
         if valid(rules, update):
-            s += update[len(update)//2]
+            a1 += update[k]
         else:
-            invalid_updates.append(set(update))
-    return s, invalid_updates
+            a2 += median(rules, set(update), k)
+    return a1, a2
 
 
 def median(rules: dict[int, set[int]], update: set[int], k: int) -> int:
@@ -77,11 +78,6 @@ def median(rules: dict[int, set[int]], update: set[int], k: int) -> int:
     return median(rules, gt_candidate, k - N - 1)
 
 
-def part_two(rules: dict[int, set], invalid_updates: list[set[int]]):
-    """Solution to part two"""
-    return sum(median(rules, update, len(update)//2) for update in invalid_updates)
-
-
 # run both solutions and print outputs + runtime
 def main():
     """The full days solution"""
@@ -96,21 +92,15 @@ def main():
     print(f"runtime: {t0: .4f}s")
 
     # Part One
-    print(":: Part One ::")
+    print(":: Part One + Two ::")
     t1 = -time.time()
-    a1, invalid_updates = part_one(rules, updates)
+    a1, a2 = part_one(rules, updates)
     t1 += time.time()
-    print(f"Answer: {a1}")
+    print(f"Part One Answer: {a1}")
+    print(f"Part Two Answer: {a2}")
     print(f"runtime: {t1: .4f}s")
 
-    # Part Two
-    print(":: Part Two ::")
-    t2 = -time.time()
-    a2 = part_two(rules, invalid_updates)
-    t2 += time.time()
-    print(f"Answer: {a2}")
-    print(f"runtime: {t2: .4f}s")
-    print(f":: total runtime: {t0+t1+t2: .4f}s ::")
+    print(f":: total runtime: {t0+t1: .4f}s ::")
 
 
 if __name__ == "__main__":
