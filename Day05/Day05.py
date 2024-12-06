@@ -9,24 +9,32 @@ def parse(file: TextIO):
     """Parse the plaintext input"""
     page_ordering_rules, update_spec = file.read().split("\n\n")
 
-    rules: dict[int, set] = {}
-
+    # Parse rules into key:val pairs such that the key returns all numbers
+    # that must appear after the key as per the inputs
+    rules: dict[int, set[int]] = {}
     for line in page_ordering_rules.split("\n"):
         x, y = line.split("|")
         if int(x) in rules:
             rules[int(x)].add(int(y))
         else:
             rules[int(x)] = {int(y)}
-    updates = [[int(n) for n in line.split(",")] for line in update_spec.split("\n") if line]
 
-    return rules, updates
+    # Return rules dict and the list of updates
+    return rules, [[int(n) for n in line.split(",")] for line in update_spec.split("\n") if line]
 
 
 def valid(rules: dict[int, set[int]], update: list[int]):
-    """Check if an update is correctly ordered"""
-    for i, n in enumerate(update[1:], start=1):
-        if rules.get(n, set()) & set(update[:i]):
+    """
+    Check if an update is correctly ordered
+
+    We will presume that the rules do not specify a total ordering,
+    meaning we cannot simply compare neighbours in an update
+    """
+    ns = set()
+    for n in update:
+        if ns & rules.get(n, set()):
             return False
+        ns.add(n)
     return True
 
 def part_one(rules: dict[int, set], updates: list[list[int]]):
@@ -44,7 +52,7 @@ def part_one(rules: dict[int, set], updates: list[list[int]]):
     return s, invalid_updates
 
 
-def median(rules: dict[int, set[int]], update: set[int], k: int):
+def median(rules: dict[int, set[int]], update: set[int], k: int) -> int:
     """
     Return the k_th ordered element of this set given the rules
     """
