@@ -1,0 +1,8 @@
+:: Advent of Code 2024 -- Day 6 ::
+:: Parsing Inputs ::
+runtime:  0.0013s
+:: Part One + Two ::
+Part One Answer: 5461
+Part Two Answer: 1836
+runtime:  1.9485s
+:: total runtime:  1.9497s ::
