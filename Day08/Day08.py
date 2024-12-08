@@ -1,4 +1,5 @@
 """AoC :: Day 8"""
+from itertools import combinations
 import time
 from typing import TextIO
 DAY = 8
@@ -42,20 +43,15 @@ class Antennae(dict[str, set[complex]]):
 
         return antinodes
 
-    def antinodes(self, bounds: complex, ):
+    def antinodes(self, bounds: complex):
         """Given bounds, return the antinode locations"""
         # Copy the locs so we can use pop
         antinodes: set[complex] = set()
         for freq in self:
-            antennae_locs = self[freq].copy()
-
-            while antennae_locs:
-                a = antennae_locs.pop()
-                for a_i in antennae_locs:
-                    for n in self.pairwise_antinodes(a, a_i):
-                        if (0 <= n.real < bounds.real) and (0 <= n.imag < bounds.imag):
-                            antinodes.add(n)
-
+            for a1, a2 in combinations(self[freq], 2):
+                for n in self.pairwise_antinodes(a1, a2):
+                    if (0 <= n.real < bounds.real) and (0 <= n.imag < bounds.imag):
+                        antinodes.add(n)
         return antinodes
 
     def resonance(self, bounds: complex):
@@ -65,13 +61,8 @@ class Antennae(dict[str, set[complex]]):
         # Copy the locs so we can use pop
         antinodes: set[complex] = set()
         for freq in self:
-            antennae_locs = self[freq].copy()
-
-            while antennae_locs:
-                a = antennae_locs.pop()
-                for a_i in antennae_locs:
-                    antinodes |= self.pairwise_resonance(a, a_i, bounds)
-
+            for a1, a2 in combinations(self[freq], 2):
+                antinodes |= self.pairwise_resonance(a1, a2, bounds)
         return antinodes
 
 
