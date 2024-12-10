@@ -58,8 +58,6 @@ def part_one(diskmap: str):
 
 def part_two(diskmap: str):
     """Solution to part two"""
-    memory = sum(int(i) for i in diskmap)
-
     checksum = 0
     position = file_id = 0
     backfill_id = N = (len(diskmap) + 1) // 2
@@ -82,13 +80,7 @@ def part_two(diskmap: str):
         # Space filling logic
         else:
             gap = int(char)
-            # Skip if there is no gap to be filled
-            if int(char) == 0:
-                continue
-
             while gap:
-                if position > memory:
-                    return checksum
                 # This time iterate over all file_ids backwards until the gap is filled
                 for backfill_id in range(N-1, -1, -1):
                     if (backfill_id not in allocated_files) and (int(diskmap[backfill_id * 2]) <= gap):
