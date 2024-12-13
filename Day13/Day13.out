@@ -1,0 +1,10 @@
+:: Advent of Code 2024 -- Day 13 ::
+:: Parsing Inputs ::
+runtime:  0.0007s
+:: Part One ::
+Answer: 38714
+runtime:  0.0002s
+:: Part Two ::
+Answer: 74015623345775
+runtime:  0.0002s
+:: total runtime:  0.0011s ::
