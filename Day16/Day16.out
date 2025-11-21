@@ -1,0 +1,11 @@
+:: Advent of Code 2024 -- Day 16 ::
+:: Parsing Inputs ::
+runtime:  0.0181s
+:: Part One ::
+Graph has 914 junctions
+Answer: 130536
+runtime:  0.0108s
+:: Part Two ::
+Answer: 1024
+runtime:  0.0092s
+:: total runtime:  0.0381s ::
